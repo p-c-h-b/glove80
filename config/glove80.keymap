@@ -23,9 +23,11 @@
 #define WORLD 4
 #define MAGIC 5
 
-// SBALL: collision-proof Hyper-chord; Sway binds this (press/release) to signal
-// the trackball-scroll daemon. Not a real mouse button (avoids back/forward).
-#define SBALL LG(LC(LA(LS(SEMI))))
+// SBALL: a plain, app-inert key (Pause) that Sway binds (press/release) to signal
+// the trackball-scroll daemon. It must NOT be a modifier or a chord — any held
+// Ctrl/Shift/Alt would corrupt scrolling (Ctrl=zoom, Shift=horizontal). Sway
+// consumes Pause so no app ever sees it.
+#define SBALL PAUSE_BREAK
 
 // Bilateral home-row-mod trigger sets: a left mod only engages when an
 // opposite-(right)-hand key follows, and vice-versa.
@@ -179,7 +181,7 @@
             &none      &none      &none      &none      &none      &none                                                                      &none      &none      &none      &none      &none      &none
             &kp F1     &kp F2     &kp F3     &kp F4     &kp F5     &kp F6                                                                      &kp F7     &kp F8     &kp F9     &kp F10    &kp F11    &kp F12
             &kp F13    &hml LGUI F14 &hml LALT F15 &hml LCTRL F16 &hml LSHFT F17 &kp F18                                                       &kp F19    &hmr RSHFT F20 &hmr RCTRL F21 &hmr RALT F22 &hmr RGUI F23 &kp F24
-            &trans     &kp C_BRI_DN &kp C_BRI_UP &trans   &trans     &trans   &none     &none     &none          &none   &none   &none         &kp C_PREV &kp C_PP   &kp C_NEXT &kp C_VOL_DN &kp C_MUTE &kp C_VOL_UP
+            &kp C_BRI_DN &kp C_BRI_UP &kp C_PREV &kp C_PP &kp C_NEXT &trans   &none     &none     &none          &none   &none   &none         &trans     &trans     &kp C_VOL_DN &kp C_MUTE &kp C_VOL_UP &trans
             &trans     &trans     &trans     &trans     &trans               &trans    &trans    &none          &none   &trans  &trans        &trans     &trans     &trans     &trans     &trans
             >;
         };

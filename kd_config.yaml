@@ -106,7 +106,7 @@ parse_config:
     "&mmv MOVE_DOWN": "move ↓"
     "&mmv MOVE_LEFT": "move ←"
     "&mmv MOVE_RIGHT": "move →"
-    "&kp LG(LC(LA(LS(SEMI))))": "ball ⇅"
+    "&kp PAUSE_BREAK": "ball ⇅"
     # caps word + magic key labels
     "&caps_word": "capsw"
     "&magic MAGIC 0": "magic"
