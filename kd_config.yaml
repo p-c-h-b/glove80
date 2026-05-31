@@ -107,6 +107,11 @@ parse_config:
     "&mmv MOVE_LEFT": "move ←"
     "&mmv MOVE_RIGHT": "move →"
     "&kp LG(LC(LA(LS(SEMI))))": "ball ⇅"
+    # caps word + magic key labels
+    "&caps_word": "capsw"
+    "&magic MAGIC 0": "magic"
+    "&magic 5 0": "magic"
+    "&rgb_ug_status_macro": "magic"
 
 draw_config:
   draw_key_sides: true          # 3D keycap look
@@ -114,29 +119,29 @@ draw_config:
   append_colon_to_layer_header: false
   dark_mode: false              # we force a dark palette below
   svg_extra_style: |
-    /* ---- base dark palette ---- */
+    /* ---- canvas + fonts ---- */
     svg.keymap { background-color: #0d1117; }
-    rect.key, rect.combo { fill: #1b1f27; stroke: #30363d; stroke-width: 1; }
-    rect.key.side { fill: #11151c; }
     text { fill: #e6edf3; font-family: "Inter", "DejaVu Sans", "Noto Sans", sans-serif; }
-    text.tap { fill: #e6edf3; font-weight: 600; }
-    text.hold { fill: #7aa2f7; }          /* hold legend = blue */
-    text.shifted { fill: #a0a8b7; }
-    text.layer { fill: #c0caf5; }
-    /* ---- header per layer ---- */
-    text.label { fill: #ffffff; font-weight: 700; font-size: 19px; }
-    /* ---- held / layer-activator keys get an amber accent ---- */
+    /* ASCII layer header: DejaVu renders cleanly in Inkscape (Inter bold smears) */
+    text.label { fill: #ffffff; stroke: #0d1117; stroke-width: 3; paint-order: stroke;
+                 font-weight: 700; font-size: 18px; font-family: "DejaVu Sans", sans-serif; }
+    /* ---- keys: medium-dark so legends read well on the black canvas ---- */
+    rect.key, rect.combo { fill: #2b313c; stroke: #3d4452; stroke-width: 1; }
+    rect.key.side { fill: #1c2129; }
+    text.tap { fill: #f2f5f9; font-weight: 600; }
+    text.hold { fill: #9db4ff; }
+    text.shifted { fill: #bcc5d2; }
+    text.trans { fill: #5b6573; }
+    /* ---- layer-activator / held keys: amber ---- */
     rect.key.held { fill: #e0af68; stroke: #c08a3e; }
-    .held text.tap, .held text.hold, .layer-activator text.hold { fill: #1b1f27; font-weight: 700; }
     rect.key.held.side { fill: #b5832f; }
-    /* ---- subtle per-layer tints (held keys keep amber via specificity) ---- */
-    g.layer-num   rect.key { fill: #15212b; }
-    g.layer-fun   rect.key { fill: #241a2b; }
-    g.layer-mouse rect.key { fill: #14241a; }
-    g.layer-world rect.key { fill: #2b2014; }
-    g.layer-magic rect.key { fill: #2b1620; }
+    .held text.tap, .held text.hold, .layer-activator text.hold { fill: #1b1f27; font-weight: 700; }
+    /* ---- per-layer tints (lighter; held keys stay amber) ---- */
+    g.layer-num   rect.key { fill: #21384a; }
+    g.layer-fun   rect.key { fill: #36294c; }
+    g.layer-mouse rect.key { fill: #20492f; }
+    g.layer-world rect.key { fill: #4a3621; }
+    g.layer-magic rect.key { fill: #471f35; }
     g.layer-num   rect.key.held, g.layer-fun rect.key.held,
     g.layer-mouse rect.key.held, g.layer-world rect.key.held,
     g.layer-magic rect.key.held { fill: #e0af68; }
-    /* ---- transparent keys: dim ---- */
-    text.trans { fill: #3a4250; }
