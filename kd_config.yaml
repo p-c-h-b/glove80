@@ -1,0 +1,142 @@
+# keymap-drawer theme for the Glove80 keymap diagram (dark, keycap-style).
+parse_config:
+  # Show symbols instead of words for common keys.
+  zmk_keycode_map:
+    BSPC: "⌫"
+    DEL: "⌦"
+    RET: "⏎"
+    ENTER: "⏎"
+    TAB: "⇥"
+    SPACE: "␣"
+    ESC: "⎋"
+    CAPS: "⇪"
+    LEFT: "←"
+    RIGHT: "→"
+    UP: "↑"
+    DOWN: "↓"
+    PG_UP: "⇞"
+    PG_DN: "⇟"
+    HOME: "⇱"
+    END: "⇲"
+    LSHFT: "⇧"
+    RSHFT: "⇧"
+    LCTRL: "⌃"
+    RCTRL: "⌃"
+    LALT: "⌥"
+    RALT: "⌥"
+    LGUI: "◆"
+    RGUI: "◆"
+    # digits
+    N0: "0"
+    N1: "1"
+    N2: "2"
+    N3: "3"
+    N4: "4"
+    N5: "5"
+    N6: "6"
+    N7: "7"
+    N8: "8"
+    N9: "9"
+    # punctuation / symbols — show the glyph, not the name
+    GRAVE: "`"
+    TILDE: "~"
+    MINUS: "-"
+    EQUAL: "="
+    UNDER: "_"
+    PLUS: "+"
+    LBKT: "["
+    RBKT: "]"
+    LBRC: "{"
+    RBRC: "}"
+    LPAR: "("
+    RPAR: ")"
+    BSLH: "\\"
+    PIPE: "|"
+    FSLH: "/"
+    SEMI: ";"
+    COLON: ":"
+    SQT: "'"
+    DQT: "\""
+    COMMA: ","
+    DOT: "."
+    QMARK: "?"
+    EXCL: "!"
+    AT: "@"
+    HASH: "#"
+    DLLR: "$"
+    PRCNT: "%"
+    CARET: "^"
+    AMPS: "&"
+    ASTRK: "*"
+
+  # Show the real glyph for macros/morphs (and tidy the mouse layer) instead of
+  # the behavior name.
+  raw_binding_map:
+    # WORLD accents — tap = lowercase macro, shifted = uppercase macro
+    "&w_ae": "ä"
+    "&wu_ae": "Ä"
+    "&w_oe": "ö"
+    "&wu_oe": "Ö"
+    "&w_ue": "ü"
+    "&wu_ue": "Ü"
+    "&w_ie": "ï"
+    "&wu_ie": "Ï"
+    "&w_ea": "é"
+    "&wu_ea": "É"
+    "&w_aa": "á"
+    "&wu_aa": "Á"
+    "&w_nn": "ñ"
+    "&wu_nn": "Ñ"
+    "&w_cc": "ç"
+    "&wu_cc": "Ç"
+    "&w_ss": "ß"
+    "&w_eur": "€"
+    "&w_gbp": "£"
+    "&w_tm": "™"
+    "&w_cp": "©"
+    # MOUSE layer
+    "&mkp LCLK": "L click"
+    "&mkp MCLK": "M click"
+    "&mkp RCLK": "R click"
+    "&msc SCRL_UP": "scrl ↑"
+    "&msc SCRL_DOWN": "scrl ↓"
+    "&msc SCRL_LEFT": "scrl ←"
+    "&msc SCRL_RIGHT": "scrl →"
+    "&mmv MOVE_UP": "move ↑"
+    "&mmv MOVE_DOWN": "move ↓"
+    "&mmv MOVE_LEFT": "move ←"
+    "&mmv MOVE_RIGHT": "move →"
+    "&kp LG(LC(LA(LS(SEMI))))": "ball ⇅"
+
+draw_config:
+  draw_key_sides: true          # 3D keycap look
+  key_h: 58
+  append_colon_to_layer_header: false
+  dark_mode: false              # we force a dark palette below
+  svg_extra_style: |
+    /* ---- base dark palette ---- */
+    svg.keymap { background-color: #0d1117; }
+    rect.key, rect.combo { fill: #1b1f27; stroke: #30363d; stroke-width: 1; }
+    rect.key.side { fill: #11151c; }
+    text { fill: #e6edf3; font-family: "Inter", "DejaVu Sans", "Noto Sans", sans-serif; }
+    text.tap { fill: #e6edf3; font-weight: 600; }
+    text.hold { fill: #7aa2f7; }          /* hold legend = blue */
+    text.shifted { fill: #a0a8b7; }
+    text.layer { fill: #c0caf5; }
+    /* ---- header per layer ---- */
+    text.label { fill: #ffffff; font-weight: 700; font-size: 19px; }
+    /* ---- held / layer-activator keys get an amber accent ---- */
+    rect.key.held { fill: #e0af68; stroke: #c08a3e; }
+    .held text.tap, .held text.hold, .layer-activator text.hold { fill: #1b1f27; font-weight: 700; }
+    rect.key.held.side { fill: #b5832f; }
+    /* ---- subtle per-layer tints (held keys keep amber via specificity) ---- */
+    g.layer-num   rect.key { fill: #15212b; }
+    g.layer-fun   rect.key { fill: #241a2b; }
+    g.layer-mouse rect.key { fill: #14241a; }
+    g.layer-world rect.key { fill: #2b2014; }
+    g.layer-magic rect.key { fill: #2b1620; }
+    g.layer-num   rect.key.held, g.layer-fun rect.key.held,
+    g.layer-mouse rect.key.held, g.layer-world rect.key.held,
+    g.layer-magic rect.key.held { fill: #e0af68; }
+    /* ---- transparent keys: dim ---- */
+    text.trans { fill: #3a4250; }

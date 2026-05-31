@@ -1,2 +1,9 @@
 *~
 *.uf2
+
+# generated diagram artifacts (regenerate with ./make-pdf.sh)
+glove80.kd.yaml
+glove80.svg
+glove80.pdf
+draw.err
+result
