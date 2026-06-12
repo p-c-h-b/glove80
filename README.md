@@ -49,7 +49,7 @@ that keymap with `./make-images.sh` (one-sheet PDF via `./make-pdf.sh`).
 | 0 | BASE | default | QWERTY + home-row mods + nav/bracket R6 |
 | 1 | NUM | hold `num` (C4) | digits on the top row, `=`/`+` outer; shifted-number symbol row (`+ ! @ # $ %` / `^ & * ( ) _`) below |
 | 2 | FUN | hold `fun` (C3) | **F1–F22** (left outer column reserved for brightness-down) + media; home-row mods live here too |
-| 3 | MOUSE | hold `mouse` (C5) | left: clicks + scroll + **scroll-ball**; right: pointer move (hjkl) |
+| 3 | MOUSE | hold `mouse` (C5) | left: clicks; right: pointer **move** (home row, hjkl) + **scroll** (row below). Holding the layer also auto-flips the trackball to scrolling |
 | 4 | WORLD | hold `world` (C2) | Compose accents/symbols: ä Ä é É ü Ü ö ç ñ ß € £ ™ © |
 | 5 | MAGIC | hold `magic` (C6) | RGB underglow, Bluetooth profiles/clear, USB/BLE output, `&bootloader`, `&sys_reset`, Caps Word |
 
@@ -101,10 +101,11 @@ Need `keymap-drawer` (`pipx install keymap-drawer`) and `inkscape`. Theme/labels
 
 Two pieces live in the dotfiles repo (`~`), not here:
 
-- **Trackball scroll-ball** — on the MOUSE layer, the left-thumb `SBALL` key sends `Pause`.
-  A Sway bind (`bindsym Pause … / --release Pause …`) signals the `shift-hscroll.py`
-  systemd user service (`SIGUSR1`/`SIGUSR2`) to toggle a scroll mode that maps the MX Ergo's
-  ball motion to 2-axis scrolling. `Pause` is inert and carries no modifiers (a held
-  Ctrl/Shift would corrupt scrolling).
+- **Trackball scroll-ball** — the `mouse` layer key holds `Pause` (via a macro) in addition
+  to activating the layer, so the trackball scrolls *whenever you're on the MOUSE layer*.
+  A Sway bind (`bindsym Pause … / --release Pause …`) turns `Pause` into a `SIGUSR1`/`SIGUSR2`
+  signal to the `shift-hscroll.py` systemd user service, which maps the MX Ergo's ball motion
+  to 2-axis scrolling. `Pause` is inert and carries no modifiers (a held Ctrl/Shift would
+  corrupt scrolling).
 - **WORLD Compose key** — Sway sets `xkb_options "caps:escape,compose:menu"`; the WORLD
   macros emit `K_APP` (Menu) as the Compose key.

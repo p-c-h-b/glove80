@@ -6,6 +6,7 @@ cd "$(dirname "$0")"
 BG="#0d1117"
 
 keymap -c kd_config.yaml parse -z config/glove80.keymap -o glove80.kd.yaml
+python3 mark-held.py glove80.kd.yaml
 keymap -c kd_config.yaml draw glove80.kd.yaml > glove80.svg
 
 # keymap-drawer emits no background; inject a full-canvas rect so the canvas is

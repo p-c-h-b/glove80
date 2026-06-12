@@ -7,6 +7,7 @@ BG="#0d1117"
 mkdir -p images
 
 keymap -c kd_config.yaml parse -z config/glove80.keymap -o glove80.kd.yaml
+  python3 mark-held.py glove80.kd.yaml
 
 for layer in base num fun mouse world magic; do
   svg="/tmp/kd_${layer}.svg"
