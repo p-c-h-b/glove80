@@ -78,6 +78,19 @@
             bindings = <&mo>, <&kp>;
         };
 
+        // MOUSE-layer key: tap = nav key, hold = enter MOUSE *and* hold Pause (so the
+        // trackball daemon flips to scroll mode for as long as you're on the layer).
+        // Time-based (tap-preferred) so it engages even when you only touch the
+        // trackball (no keyboard key to trigger a timerless hold).
+        mslt: mouse_scroll_layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <175>;
+            quick-tap-ms = <200>;
+            bindings = <&ms_hold>, <&kp>;
+        };
+
         // Backspace, Shift -> Delete.
         bspc_del: backspace_delete {
             compatible = "zmk,behavior-mod-morph";
@@ -123,6 +136,18 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&rgb_ug RGB_STATUS>;
+        };
+
+        // Hold MOUSE layer + Pause together (Pause -> Sway -> daemon scroll mode),
+        // both released when the triggering key is released. Used by &mslt.
+        ms_hold: ms_hold {
+            label = "MS_HOLD";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &mo MOUSE &kp PAUSE_BREAK>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp PAUSE_BREAK &mo MOUSE>;
         };
 
         // Bluetooth profile selectors (stock MoErgo): switch to BLE + profile N.
@@ -190,7 +215,7 @@
             &kp GRAVE       &kp Q      &kp W      &kp E      &kp R      &kp T                                                                     &kp Y      &kp U      &kp I      &kp O      &kp P      &kp BSLH
             &kp ESC         &hml LGUI A &hml LALT S &hml LCTRL D &hml LSHFT F &kp G                                                                &kp H      &hmr RSHFT J &hmr RCTRL K &hmr RALT L &hmr RGUI SEMI &kp SQT
             &shcw LSHFT 0   &kp Z      &kp X      &kp C      &kp V      &kp B   &none     &none     &none         &none   &none   &none             &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH   &kp PG_UP
-            &magic MAGIC 0  &ltn MOUSE HOME &ltn NUM END &ltn FUN LEFT &ltn WORLD RIGHT   &bspc_del &kp TAB  &none         &none   &kp RET &kp SPACE          &ltn WORLD UP &ltn FUN DOWN &ltn NUM LBKT &ltn MOUSE RBKT &ltn MAGIC PG_DN
+            &magic MAGIC 0  &mslt 0 HOME &ltn NUM END &ltn FUN LEFT &ltn WORLD RIGHT   &bspc_del &kp TAB  &none         &none   &kp RET &kp SPACE          &ltn WORLD UP &ltn FUN DOWN &ltn NUM LBKT &mslt 0 RBKT &ltn MAGIC PG_DN
             >;
         };
 
@@ -217,15 +242,16 @@
         };
 
         mouse_layer {
-            // Left hand: clicks (home row L-M-R) + scroll. Right hand: pointer move (hjkl).
-            // SBALL on left thumb (T5) holds the trackball into scroll mode.
+            // Left hand: clicks (home row L-M-R). Right hand: pointer move (hjkl) on the
+            // home row, scroll (h/j/k/l-style) on the row directly below it. Trackball
+            // also scrolls automatically while this layer is held (see &mslt).
             bindings = <
             &none      &none      &none      &none      &none                                                                                          &none      &none      &none      &none      &none
             &none      &none      &none      &none      &none      &none                                                                      &none      &none      &none      &none      &none      &none
-            &trans     &trans     &msc SCRL_UP &msc SCRL_DOWN &trans &trans                                                                    &trans     &trans     &trans     &trans     &trans     &trans
+            &trans     &trans     &trans     &trans     &trans     &trans                                                                      &trans     &trans     &trans     &trans     &trans     &trans
             &trans     &trans     &mkp LCLK  &mkp MCLK  &mkp RCLK  &trans                                                                     &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT &trans &trans
-            &trans     &trans     &msc SCRL_LEFT &msc SCRL_RIGHT &trans &trans &none   &none     &none          &none   &none   &none         &trans     &trans     &trans     &trans     &trans     &trans
-            &trans     &trans     &trans     &trans     &trans               &trans    &kp SBALL &none          &none   &trans  &trans        &trans     &trans     &trans     &trans     &trans
+            &trans     &trans     &trans     &trans     &trans     &trans   &none   &none     &none          &none   &none   &none         &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT &trans &trans
+            &trans     &trans     &trans     &trans     &trans               &trans    &trans    &none          &none   &trans  &trans        &trans     &trans     &trans     &trans     &trans
             >;
         };
 
